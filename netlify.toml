@@ -1,0 +1,18 @@
+# Netlify configuration for the Copper Kitchen monorepo.
+# The Next.js site lives in apps/web; the shared workspace package
+# (@copperkitchen/shared) must be built first because its dist/ is
+# gitignored and the web app imports from its package entry.
+
+[build]
+  command = "npm run build --workspace @copperkitchen/shared && npm run build --workspace @copperkitchen/web"
+  publish = "apps/web/.next"
+
+[build.environment]
+  NODE_VERSION = "20"
+  # The frontend is designed to render verified fallback content when the
+  # API is unreachable, so no API URL is required for the site to work.
+  # Set this once the backend is deployed (e.g. on Render):
+  # NEXT_PUBLIC_API_URL = "https://your-api.onrender.com"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
