@@ -1,0 +1,22 @@
+services:
+  db:
+    image: postgres:15
+    container_name: copperkitchen-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: copper
+      POSTGRES_PASSWORD: copper
+      POSTGRES_DB: copperkitchen
+    ports:
+      - "55432:5432"
+    volumes:
+      - copperkitchen-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U copper -d copperkitchen"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  copperkitchen-pgdata:
+    name: copperkitchen-pgdata

@@ -1,0 +1,41 @@
+{
+  "name": "copper-kitchen",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Copper Kitchen (Bicester) — monorepo for the restaurant website, API and shared packages.",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:api": "npm run dev --workspace @copperkitchen/api",
+    "dev:web": "npm run dev --workspace @copperkitchen/web",
+    "build": "npm run build --workspace @copperkitchen/api && npm run build --workspace @copperkitchen/web",
+    "typecheck": "npm run typecheck --workspace @copperkitchen/shared && npm run typecheck --workspace @copperkitchen/api",
+    "prisma:generate": "prisma generate --schema prisma/schema.prisma",
+    "prisma:migrate": "prisma migrate dev --schema prisma/schema.prisma",
+    "db:seed": "tsx prisma/seed.ts",
+    "db:up": "docker compose up -d"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node": "^20.16.11",
+    "prisma": "^5.22.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "allowScripts": {
+    "@prisma/client@5.22.0": true,
+    "prisma@5.22.0": true,
+    "@prisma/engines@5.22.0": true,
+    "esbuild@0.28.2": true
+  }
+}

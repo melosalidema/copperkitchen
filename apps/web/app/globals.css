@@ -1,0 +1,387 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Palette */
+  --color-primary: #b87333;
+  --color-primary-hover: #9a5f28;
+  --color-secondary: #2c2c2c;
+  --color-accent: #d4af37;
+  --color-background: #fdfbf7;
+  --color-surface: #ffffff;
+  --color-text: #1a1a1a;
+  --color-text-muted: #6e655a;
+  --color-text-on-dark: #f5efe4;
+  --color-border: #e8dfd2;
+  --color-error: #b3402e;
+  --color-success: #3e7b52;
+  --color-warning: #b98a2f;
+
+  /* Gradients */
+  --gradient-copper: linear-gradient(135deg, #c98343 0%, #b87333 55%, #9a5f28 100%);
+  --gradient-copper-text: linear-gradient(120deg, #b87333 0%, #d4af37 50%, #b87333 100%);
+  --gradient-hero-overlay: linear-gradient(
+    180deg,
+    rgba(20, 16, 12, 0.72) 0%,
+    rgba(20, 16, 12, 0.45) 45%,
+    rgba(20, 16, 12, 0.78) 100%
+  );
+  --gradient-status: linear-gradient(90deg, #e9d3b2 0%, #e3c79e 50%, #e9d3b2 100%);
+
+  /* Motion tokens */
+  --motion-hover: 0.2s;
+  --motion-fade: 0.3s;
+  --motion-reveal: 0.6s cubic-bezier(0, 0, 0.2, 1);
+  --motion-modal: 0.35s;
+  --motion-drawer: 0.3s;
+  --ease-out-quad: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Subtle linen/noise grain texture (grayscale fractal noise) */
+  --grain-url: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 7rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  font-family: var(--font-body, 'Inter', system-ui, -apple-system, sans-serif);
+  background-color: var(--color-background);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: rgba(184, 115, 51, 0.28);
+}
+
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+@layer components {
+  /* ------------------------------------------------------------------ */
+  /* Linen/noise grain texture — ~2% opacity, overlay blend.            */
+  /* Apply to the cream background (body) and dark sections.            */
+  /* ------------------------------------------------------------------ */
+  .grain {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .grain::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.02;
+    mix-blend-mode: overlay;
+    background-image: var(--grain-url);
+    background-size: 180px 180px;
+    background-repeat: repeat;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Hero background — copper gradient + texture + overlay for contrast */
+  /* A future background image can be supplied by setting the           */
+  /* `--hero-bg-image` CSS variable (e.g. on the element inline).       */
+  /* ------------------------------------------------------------------ */
+  .hero-background {
+    --hero-bg-image: none;
+    background-color: var(--color-secondary);
+    background-image: var(--gradient-hero-overlay),
+      linear-gradient(
+        180deg,
+        rgba(46, 42, 36, 0.45) 0%,
+        rgba(46, 42, 36, 0.88) 100%
+      ),
+      radial-gradient(
+        ellipse 90% 65% at 72% 22%,
+        rgba(184, 115, 51, 0.55) 0%,
+        rgba(46, 42, 36, 0) 62%
+      ),
+      radial-gradient(
+        ellipse 85% 60% at 16% 82%,
+        rgba(201, 138, 75, 0.35) 0%,
+        rgba(46, 42, 36, 0) 64%
+      ),
+      var(--hero-bg-image);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Buttons                                                            */
+  /* ------------------------------------------------------------------ */
+  .btn-primary,
+  .btn-secondary {
+    display: inline-flex;
+    min-height: 48px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    padding: 14px 28px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    transition:
+      transform var(--motion-hover) ease,
+      box-shadow var(--motion-hover) ease,
+      background-color var(--motion-hover) ease,
+      color var(--motion-hover) ease,
+      border-color var(--motion-hover) ease,
+      opacity var(--motion-hover) ease;
+  }
+
+  .btn-primary {
+    color: #ffffff;
+    background-image: var(--gradient-copper);
+    box-shadow: 0 6px 18px rgba(184, 115, 51, 0.35);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .btn-primary:hover {
+      transform: scale(1.02);
+      box-shadow: 0 10px 26px rgba(184, 115, 51, 0.45);
+    }
+  }
+
+  .btn-primary:active {
+    transform: scale(0.98);
+  }
+
+  .btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: 0 6px 18px rgba(184, 115, 51, 0.35);
+  }
+
+  .btn-secondary {
+    border: 1.5px solid var(--color-primary);
+    background-color: transparent;
+    color: var(--color-primary);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .btn-secondary:hover {
+      transform: scale(1.02);
+      background-image: var(--gradient-copper);
+      border-color: transparent;
+      color: #ffffff;
+      box-shadow: 0 6px 18px rgba(184, 115, 51, 0.35);
+    }
+  }
+
+  .btn-secondary:active {
+    transform: scale(0.98);
+  }
+
+  .btn-secondary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  /* Inline loading spinner (for form submit buttons). */
+  .spinner {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    border-top-color: #ffffff;
+    border-radius: 9999px;
+    animation: spin 0.7s linear infinite;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Eyebrow                                                            */
+  /* ------------------------------------------------------------------ */
+  .eyebrow {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Card base                                                          */
+  /* ------------------------------------------------------------------ */
+  .card {
+    background-color: var(--color-surface);
+    border-radius: 12px;
+    border: 1px solid var(--color-border);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    padding: 24px;
+    transition:
+      transform var(--motion-hover) ease,
+      box-shadow var(--motion-hover) ease,
+      border-color var(--motion-hover) ease;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(26, 26, 26, 0.12);
+    }
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Mobile drawer link stagger                                         */
+  /* ------------------------------------------------------------------ */
+  @keyframes menu-link-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .animate-menu-link {
+    animation: menu-link-in 0.3s var(--ease-out-quad) both;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Menu list cross-fade (0.3s + 0.05s per-item stagger)               */
+  /* ------------------------------------------------------------------ */
+  @keyframes list-item-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .animate-list-item {
+    animation: list-item-in 0.3s ease both;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Hero staggered entrance (first paint)                              */
+  /* ------------------------------------------------------------------ */
+  @keyframes hero-in {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-anim {
+      opacity: 0;
+      animation: hero-in 0.7s cubic-bezier(0, 0, 0.2, 1) both;
+    }
+    .hero-anim-1 {
+      animation-delay: 0.05s;
+    }
+    .hero-anim-2 {
+      animation-delay: 0.2s;
+    }
+    .hero-anim-3 {
+      animation-delay: 0.35s;
+    }
+    .hero-anim-4 {
+      animation-delay: 0.5s;
+    }
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Hero scroll cue (bouncing chevron)                                 */
+  /* ------------------------------------------------------------------ */
+  @keyframes chevron-bounce {
+    0%,
+    100% {
+      transform: translateY(0);
+      opacity: 0.7;
+    }
+    50% {
+      transform: translateY(8px);
+      opacity: 1;
+    }
+  }
+
+  .scroll-cue {
+    animation: chevron-bounce 2s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-cue {
+      display: none;
+    }
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Gallery tiles — hover zoom + caption slide-up (hover devices only) */
+  /* ------------------------------------------------------------------ */
+  @media (hover: hover) {
+    .gallery-tile .gallery-img {
+      transition: transform 0.4s ease;
+    }
+    .gallery-tile:hover .gallery-img,
+    .gallery-tile:focus-visible .gallery-img {
+      transform: scale(1.05);
+    }
+    .gallery-caption {
+      opacity: 0;
+      transform: translateY(12px);
+      transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+    }
+    .gallery-tile:hover .gallery-caption,
+    .gallery-tile:focus-visible .gallery-caption {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* Static caption on touch devices (no hover). */
+  @media (hover: none) {
+    .gallery-caption {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}

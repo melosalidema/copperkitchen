@@ -1,0 +1,153 @@
+// Prisma schema for Copper Kitchen (Bicester)
+// PostgreSQL 15, Prisma 5.x
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ---------------------------------------------------------------------------
+// Users (admin)
+// ---------------------------------------------------------------------------
+model User {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email        String   @unique
+  passwordHash String
+  role         String   @default("admin")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// ---------------------------------------------------------------------------
+// Reservations
+// ---------------------------------------------------------------------------
+model Reservation {
+  id                String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  customerName      String
+  phone             String
+  email             String?
+  reservationDate   DateTime  @db.Date
+  reservationTime   String
+  guestCount        Int
+  specialRequests   String?
+  status            String    @default("pending") // pending | confirmed | cancelled
+  cancellationToken String    @unique @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@unique([reservationDate, reservationTime, phone])
+  @@index([reservationDate, reservationTime])
+  @@index([status])
+}
+
+// ---------------------------------------------------------------------------
+// Contact messages
+// ---------------------------------------------------------------------------
+model ContactMessage {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name      String
+  email     String
+  message   String
+  status    String   @default("new") // new | read | archived
+  createdAt DateTime @default(now())
+}
+
+// ---------------------------------------------------------------------------
+// Newsletter subscribers
+// ---------------------------------------------------------------------------
+model NewsletterSubscriber {
+  id              String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email           String    @unique
+  status          String    @default("pending") // pending | subscribed | unsubscribed
+  subscribedAt    DateTime  @default(now())
+  unsubscribedAt  DateTime?
+}
+
+// ---------------------------------------------------------------------------
+// Menu
+// ---------------------------------------------------------------------------
+model MenuCategory {
+  id          String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name        String     @unique
+  slug        String     @unique
+  description String?
+  sortOrder   Int        @default(0)
+  isActive    Boolean    @default(true)
+  items       MenuItem[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model MenuItem {
+  id            String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  categoryId    String       @db.Uuid
+  category      MenuCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  name          String
+  description   String?
+  priceGbp      Decimal?     @db.Decimal(6, 2)
+  dietaryTags   String[]
+  isFeatured    Boolean      @default(false)
+  isAvailable   Boolean      @default(true)
+  isPlaceholder Boolean      @default(false)
+  sortOrder     Int          @default(0)
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+}
+
+// ---------------------------------------------------------------------------
+// Testimonials (verified Tripadvisor content only)
+// ---------------------------------------------------------------------------
+model Testimonial {
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  reviewerName String
+  rating       Int?
+  text         String
+  source       String    @default("Tripadvisor")
+  sourceUrl    String?
+  reviewDate   DateTime? @db.Date
+  isApproved   Boolean   @default(false)
+  createdAt    DateTime  @default(now())
+}
+
+// ---------------------------------------------------------------------------
+// Gallery
+// ---------------------------------------------------------------------------
+model GalleryImage {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  url       String
+  altText   String
+  caption   String?
+  category  String?
+  sortOrder Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+// ---------------------------------------------------------------------------
+// Key/value restaurant settings (JSON values)
+// ---------------------------------------------------------------------------
+model RestaurantSetting {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  key       String   @unique
+  value     Json
+  updatedAt DateTime @updatedAt
+}
+
+// ---------------------------------------------------------------------------
+// Opening hours
+// ---------------------------------------------------------------------------
+model OpeningHour {
+  id        String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  dayOfWeek Int
+  openTime  String?
+  closeTime String?
+  isClosed  Boolean @default(false)
+  slotType  String  @default("dinner") // lunch | dinner
+  source    String  @default("manual")
+
+  @@unique([dayOfWeek, slotType])
+}
