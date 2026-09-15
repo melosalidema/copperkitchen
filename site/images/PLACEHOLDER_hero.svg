@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080" role="img">
+  <defs>
+    <linearGradient id="heroBase" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#33302C"/>
+      <stop offset="0.55" stop-color="#2C2C2C"/>
+      <stop offset="1" stop-color="#1F1D1B"/>
+    </linearGradient>
+    <radialGradient id="emberA" cx="0.24" cy="0.22" r="0.6">
+      <stop offset="0" stop-color="#C17A3A" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#C17A3A" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="emberB" cx="0.85" cy="0.78" r="0.55">
+      <stop offset="0" stop-color="#B87333" stop-opacity="0.42"/>
+      <stop offset="1" stop-color="#B87333" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0.55"/>
+    </linearGradient>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#heroBase)"/>
+  <rect width="1920" height="1080" fill="url(#emberA)"/>
+  <rect width="1920" height="1080" fill="url(#emberB)"/>
+  <g fill="none" stroke="#B87333" stroke-opacity="0.14" stroke-width="2">
+    <path d="M0 842.4 C 480 756, 864 950.4, 1920 799.2"/>
+    <path d="M0 928.8 C 576 864, 1056 1026, 1920 907.1999999999999"/>
+  </g>
+  <rect y="594" width="1920" height="486" fill="url(#floor)"/>
+</svg>
