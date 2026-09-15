@@ -1,18 +1,123 @@
-# Netlify configuration for the Copper Kitchen monorepo.
-# The Next.js site lives in apps/web; the shared workspace package
-# (@copperkitchen/shared) must be built first because its dist/ is
-# gitignored and the web app imports from its package entry.
+# ============================================================================
+# Boca Tapas Bar & Grill — Netlify configuration
+#
+# The live site is plain HTML/CSS/JS in site/ — there is no build step.
+# Drag-and-drop deployment works too: drop the site/ folder on Netlify Drop.
+# ============================================================================
 
 [build]
-  command = "npm run build --workspace @copperkitchen/shared && npm run build --workspace @copperkitchen/web"
-  publish = "apps/web/.next"
+  # Explicitly a no-op so Netlify never tries the legacy Next.js monorepo build.
+  command = "echo 'Static site — nothing to build. Publishing site/'"
+  publish = "site"
 
-[build.environment]
-  NODE_VERSION = "20"
-  # The frontend is designed to render verified fallback content when the
-  # API is unreachable, so no API URL is required for the site to work.
-  # Set this once the backend is deployed (e.g. on Render):
-  # NEXT_PUBLIC_API_URL = "https://your-api.onrender.com"
+# ----------------------------------------------------------------------------
+# Redirects (also makes /menu, /book and friends work as clean URLs)
+# ----------------------------------------------------------------------------
 
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
+# Menu page
+[[redirects]]
+  from = "/menu/"
+  to = "/menu.html"
+  status = 200
+
+[[redirects]]
+  from = "/menu"
+  to = "/menu.html"
+  status = 200
+
+# Booking / contact — send visitors straight to the reservation form
+[[redirects]]
+  from = "/book"
+  to = "/#book"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/contact"
+  to = "/#book"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/find-us"
+  to = "/#find-us"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/gallery"
+  to = "/#gallery"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/reviews"
+  to = "/#reviews"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/story"
+  to = "/#story"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/thank-you"
+  to = "/thank-you.html"
+  status = 200
+
+# ----------------------------------------------------------------------------
+# Headers: caching + a conservative security baseline
+# ----------------------------------------------------------------------------
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=(), payment=()"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+
+# Fingerprint-free assets, so keep TTLs short and revalidate.
+[[headers]]
+  for = "/style.css"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, must-revalidate"
+
+[[headers]]
+  for = "/script.js"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, must-revalidate"
+
+# Placeholder artwork and real photography: safe to cache longer.
+# Once photos are final, raise this to 31536000.
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/favicon.svg"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+# Never cache the HTML shell, so menu and hours changes appear immediately.
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# ----------------------------------------------------------------------------
+# Plugins
+# ----------------------------------------------------------------------------
+# No plugins are required. Responsive images use the Netlify Image CDN
+# (/.netlify/images?url=...&w=...&fm=webp), which is built in and needs no
+# install. See tools/image-urls.mjs.
+#
+# The legacy @netlify/plugin-image-optim plugin is deprecated in favour of the
+# Image CDN; if you ever need it, it would be configured like this:
+#
+# [[plugins]]
+#   package = "@netlify/plugin-image-optim"
