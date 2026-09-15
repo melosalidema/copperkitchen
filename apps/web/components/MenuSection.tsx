@@ -98,7 +98,7 @@ export default function MenuSection() {
         </div>
 
         <div className="mt-12">
-          {isLoading ? (
+          {isLoading && categories.length === 0 ? (
             <MenuSkeleton />
           ) : visibleCategories.length === 0 ? (
             <p className="rounded-xl border border-brand-border bg-brand-background p-8 text-center text-brand-text_muted">

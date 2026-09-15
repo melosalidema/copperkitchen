@@ -42,7 +42,10 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  /* NOTE: no `scroll-behavior: smooth` here — it makes the browser animate
+     scroll-position restoration on reload (reads as "refresh sends me to the
+     bottom"). Smooth anchor navigation is handled client-side in
+     components/SmoothScroll.tsx, which also resets to the top on refresh. */
   scroll-padding-top: 7rem;
 }
 
@@ -324,6 +327,60 @@ body {
     }
     .hero-anim-4 {
       animation-delay: 0.5s;
+    }
+    .hero-anim-5 {
+      animation-delay: 0.65s;
+    }
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Closure ribbon — soft underlay band + subtle gold shimmer          */
+  /* ------------------------------------------------------------------ */
+  .closure-ribbon {
+    position: relative;
+    overflow: hidden;
+    background-image: linear-gradient(
+      90deg,
+      rgba(179, 64, 46, 0) 0%,
+      rgba(179, 64, 46, 0.28) 18%,
+      rgba(179, 64, 46, 0.28) 82%,
+      rgba(179, 64, 46, 0) 100%
+    );
+    box-shadow: inset 0 0 24px rgba(179, 64, 46, 0.18);
+  }
+
+  /* Soft ~10% opacity shimmer sweep, 2.5s. */
+  .closure-ribbon::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: linear-gradient(
+      105deg,
+      transparent 42%,
+      rgba(212, 175, 55, 0.1) 50%,
+      transparent 58%
+    );
+    background-size: 220% 100%;
+    background-position: 150% 0;
+    animation: closure-shimmer 2.5s ease-in-out infinite;
+  }
+
+  @keyframes closure-shimmer {
+    0% {
+      background-position: 150% 0;
+    }
+    55%,
+    100% {
+      background-position: -70% 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .closure-ribbon::after {
+      animation: none;
+      background: none;
     }
   }
 

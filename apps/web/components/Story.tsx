@@ -2,45 +2,37 @@ import ScrollReveal from './ScrollReveal';
 import SectionHeading from './SectionHeading';
 
 const HIGHLIGHTS = [
-  'Meat sourced from local butchers and fish from the local fishmonger daily',
-  'Open kitchen — watch the chefs at work',
+  'Local butchers and fishmonger, daily',
+  'Open kitchen',
   'Set menu, regular menu and nightly specials',
-  'Cosy bistro dining in the centre of Bicester, near Bicester Village'
+  'Cosy dining room with twinkling lights'
 ];
 
-export default function About() {
+export default function Story() {
   return (
     <section
-      id="about"
+      id="story"
       className="scroll-mt-24 bg-brand-background py-16 md:py-24 lg:py-[120px]"
     >
       <div className="mx-auto max-w-content px-6 sm:px-10 lg:px-16">
         <ScrollReveal>
-          <SectionHeading
-            eyebrow="About"
-            title="A cosy bistro in the heart of Bicester"
-            description="Copper Kitchen served freshly home-made food from an open kitchen in central Bicester."
-          />
+          <SectionHeading eyebrow="Our Story" title="A cosy bistro in the heart of Bicester" />
         </ScrollReveal>
 
         <div className="mt-14 grid items-center gap-10 md:grid-cols-2 md:gap-14">
           <ScrollReveal delay={100}>
             <div className="space-y-5 text-base leading-relaxed text-brand-text_muted md:text-lg">
               <p>
-                Copper Kitchen was a bistro in the centre of Bicester, a short
-                walk from Bicester Village. Everything was cooked to order in an
-                open kitchen, with meat sourced from local butchers and fish
-                delivered fresh from the local fishmonger daily.
+                Copper Kitchen opened in 2014 as a warm, welcoming bistro at 75
+                Sheep Street — a short walk from Bicester Village. Meat was
+                sourced from local butchers and fish from the local fishmonger
+                daily, all cooked to order in an open kitchen.
               </p>
+              <p>Alongside the regular menu there was a set menu and nightly specials.</p>
               <p>
-                Alongside the regular menu, diners could choose from a set menu
-                and nightly specials written on the board — freshly prepared,
-                honest food in a warm and friendly room.
-              </p>
-              <p>
-                Owner and chef <strong className="font-semibold text-brand-text">Kushtrim</strong>{' '}
-                opened Copper Kitchen in 2014 after more than ten years working
-                as a chef.
+                The restaurant permanently closed on 26 October 2025; this
+                website preserves its menu, its words from guests, and its story
+                as a tribute to a much-loved Bicester dining room.
               </p>
             </div>
           </ScrollReveal>

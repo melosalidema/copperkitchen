@@ -1,7 +1,5 @@
 import {
   ADDRESS_LINES,
-  BOCA_URL,
-  BOCA_URL_LABEL,
   FACEBOOK_URL,
   INSTAGRAM_URL,
   PHONE_DISPLAY,
@@ -10,11 +8,11 @@ import {
 import Newsletter from './Newsletter';
 
 const QUICK_LINKS = [
-  { href: '#about', label: 'About' },
+  { href: '#story', label: 'Story' },
   { href: '#menu', label: 'Menu' },
   { href: '#gallery', label: 'Gallery' },
   { href: '#reviews', label: 'Reviews' },
-  { href: '#location', label: 'Location & Hours' },
+  { href: '#location', label: 'Location' },
   { href: '#contact', label: 'Contact' }
 ] as const;
 
@@ -107,17 +105,8 @@ export default function Footer() {
 
         <div className="mt-14 border-t border-brand-text_on_dark/15 pt-8">
           <p className={`text-sm leading-relaxed ${bodyText}`}>
-            Copper Kitchen ceased trading on 26 October 2025 and now operates as{' '}
-            <a
-              href={BOCA_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-semibold text-brand-text_on_dark underline decoration-brand-primary underline-offset-2 hover:text-brand-accent"
-            >
-              {BOCA_URL_LABEL}
-              <span className="sr-only"> (opens in a new tab)</span>
-            </a>
-            .
+            Copper Kitchen 2014 – 2025 · A tribute to a much-loved Bicester
+            bistro
           </p>
           <p className="mt-4 pb-20 text-xs text-brand-text_on_dark/50 md:pb-0">
             © 2026 Copper Kitchen. All rights reserved.

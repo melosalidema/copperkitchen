@@ -56,7 +56,7 @@ export const FALLBACK_MENU: MenuCategoryDto[] = [
       fallbackItem(
         CATEGORY_IDS.starters,
         'fallback-item-starter-mozzarella',
-        'Pan fried Mozzarella wrapped in ham on ciabatta with salad',
+        'Pan fried Mozzarella wrapped in ham on chiabata with salad',
         ['v']
       )
     ]
@@ -166,7 +166,7 @@ export const GALLERY_PLACEHOLDER_TILES: Array<{
 export const FALLBACK_GALLERY: GalleryImageDto[] = [];
 
 /**
- * The 7 verified Tripadvisor testimonials (text kept exactly as sourced).
+ * The 5 verified Tripadvisor testimonials (text kept exactly as sourced).
  * Shown when the API is unavailable so the reviews section is never empty.
  */
 export const FALLBACK_TESTIMONIALS: Array<{
@@ -183,8 +183,8 @@ export const FALLBACK_TESTIMONIALS: Array<{
   {
     id: 'fallback-testimonial-1',
     reviewerName: '360stacyc',
-    rating: 5,
-    text: 'Pretty, cosy, delicious...',
+    rating: null,
+    text: 'Pretty, cosy, delicious... we will absolutely be going back.',
     source: 'Tripadvisor',
     sourceUrl: null,
     reviewDate: '2022-11-19',
@@ -194,8 +194,8 @@ export const FALLBACK_TESTIMONIALS: Array<{
   {
     id: 'fallback-testimonial-2',
     reviewerName: 'tubs168',
-    rating: 5,
-    text: 'Warm and cosy with excellent food...',
+    rating: null,
+    text: 'Warm and cosy with excellent food. A gem in Bicester.',
     source: 'Tripadvisor',
     sourceUrl: null,
     reviewDate: '2022-10-20',
@@ -205,8 +205,8 @@ export const FALLBACK_TESTIMONIALS: Array<{
   {
     id: 'fallback-testimonial-3',
     reviewerName: 'lesclt',
-    rating: 5,
-    text: 'Cosy restaurant, consistently good...',
+    rating: null,
+    text: 'Cosy restaurant, consistently good... first class service.',
     source: 'Tripadvisor',
     sourceUrl: null,
     reviewDate: '2022-10-08',
@@ -216,8 +216,8 @@ export const FALLBACK_TESTIMONIALS: Array<{
   {
     id: 'fallback-testimonial-4',
     reviewerName: 'jayceek2013',
-    rating: 5,
-    text: 'Delicious Food Lovely Venue Great Service...',
+    rating: null,
+    text: 'Delicious Food Lovely Venue Great Service',
     source: 'Tripadvisor',
     sourceUrl: null,
     reviewDate: '2022-08-08',
@@ -226,36 +226,14 @@ export const FALLBACK_TESTIMONIALS: Array<{
   },
   {
     id: 'fallback-testimonial-5',
-    reviewerName: 'joannelK9044HL',
-    rating: 5,
-    text: 'Lovely restaurant...',
-    source: 'Tripadvisor',
-    sourceUrl: null,
-    reviewDate: '2022-08-03',
-    isApproved: true,
-    createdAt: '2022-08-03T00:00:00.000Z'
-  },
-  {
-    id: 'fallback-testimonial-6',
     reviewerName: 'HenningJ719',
-    rating: 5,
-    text: 'One of the best in town...',
+    rating: null,
+    text: 'One of the best in town',
     source: 'Tripadvisor',
     sourceUrl: null,
     reviewDate: '2022-07-15',
     isApproved: true,
     createdAt: '2022-07-15T00:00:00.000Z'
-  },
-  {
-    id: 'fallback-testimonial-7',
-    reviewerName: 'katym279',
-    rating: 5,
-    text: 'Amazing food...',
-    source: 'Tripadvisor',
-    sourceUrl: null,
-    reviewDate: '2022-06-04',
-    isApproved: true,
-    createdAt: '2022-06-04T00:00:00.000Z'
   }
 ];
 
@@ -268,9 +246,6 @@ export const ADDRESS_LINES = [
 ];
 export const ADDRESS_FULL = '75 Sheep Street, Bicester, Oxfordshire OX26 6JS';
 
-export const BOCA_URL = 'https://www.bocabicester.com/';
-export const BOCA_URL_LABEL = 'Boca Tapas Bar and Grill';
-
 export const FACEBOOK_URL = 'https://www.facebook.com/Copperkitchenbicester/';
 export const INSTAGRAM_URL = 'https://www.instagram.com/the_copper_kitchen/';
 
@@ -279,15 +254,6 @@ export const DIRECTIONS_URL =
 
 export const OSM_EMBED_URL =
   'https://www.openstreetmap.org/export/embed.html?bbox=-1.155961,51.897632,-1.149961,51.901632&layer=mapnik&marker=51.899632,-1.152961';
-
-/** Successor restaurant Boca kitchen hours (reference only). */
-export const BOCA_KITCHEN_HOURS: Array<{ day: string; hours: string }> = [
-  { day: 'Monday', hours: 'Closed' },
-  { day: 'Tuesday – Thursday', hours: '5 – 9pm' },
-  { day: 'Friday', hours: '5 – 10pm' },
-  { day: 'Saturday', hours: '12 – 10pm' },
-  { day: 'Sunday', hours: '12 – 4pm' }
-];
 
 export const DAY_NAMES = [
   'Monday',

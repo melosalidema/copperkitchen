@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter, Playfair_Display } from 'next/font/google';
+import SmoothScroll from '@/components/SmoothScroll';
 import './globals.css';
 
 const playfair = Playfair_Display({
@@ -15,9 +16,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'Copper Kitchen | Bicester Restaurant',
+  title: 'Copper Kitchen | Bicester Restaurant (2014–2025)',
   description:
-    'Copper Kitchen was a cosy bistro in the centre of Bicester serving freshly home-made food, near Bicester Village. Now operating as Boca Tapas Bar and Grill.',
+    'Copper Kitchen was a cosy bistro in the centre of Bicester serving freshly home-made food. Permanently closed on 26 October 2025 — this site is a tribute to its legacy.',
   metadataBase: new URL('https://copperkitchen.local')
 };
 
@@ -41,7 +42,7 @@ const restaurantSchema = {
   },
   servesCuisine: 'British',
   description:
-    'Copper Kitchen was a cosy bistro in the centre of Bicester serving freshly home-made food, near Bicester Village. It is permanently closed — the site at 75 Sheep Street now operates as Boca Tapas Bar and Grill (https://www.bocabicester.com/).'
+    'Copper Kitchen was a cosy bistro in the centre of Bicester serving freshly home-made food at 75 Sheep Street from 2014. It permanently closed on 26 October 2025 — this website is preserved as a tribute to its legacy.'
 };
 
 export default function RootLayout({
@@ -56,6 +57,7 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(restaurantSchema) }}
         />
+        <SmoothScroll />
         {children}
       </body>
     </html>

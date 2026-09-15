@@ -110,7 +110,7 @@ export default function Testimonials() {
         <ScrollReveal>
           <SectionHeading
             eyebrow="Reviews"
-            title="What guests said"
+            title="Kind words from our guests"
             description="Words from guests who dined with us."
           />
           <p className="mx-auto mt-4 max-w-xl text-center text-sm text-brand-text_muted">

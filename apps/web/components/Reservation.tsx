@@ -57,6 +57,7 @@ function settingsFlag(value: unknown): boolean {
 export default function Reservation() {
   const { data: settings } = useSettings();
   const reservationsEnabled = settingsFlag(settings?.reservations_enabled);
+  const permanentlyClosed = settingsFlag(settings?.permanently_closed);
 
   const [customerName, setCustomerName] = useState('');
   const [phone, setPhone] = useState('');
@@ -123,9 +124,10 @@ export default function Reservation() {
   };
 
   // -------------------------------------------------------------------------
-  // Closed state: reservations disabled — book by phone.
+  // Closed state: reservations disabled or the restaurant is permanently
+  // closed — this site now stands as a tribute.
   // -------------------------------------------------------------------------
-  if (!reservationsEnabled) {
+  if (!reservationsEnabled || permanentlyClosed) {
     return (
       <section
         id="reservation"
@@ -133,11 +135,7 @@ export default function Reservation() {
       >
         <div className="mx-auto max-w-content px-6 sm:px-10 lg:px-16">
           <ScrollReveal>
-            <SectionHeading
-              eyebrow="Reservations"
-              title="Book a table by phone"
-              description="Copper Kitchen ceased trading on 26 October 2025 — online booking is closed."
-            />
+            <SectionHeading eyebrow="Reservations" title="Book a table" />
           </ScrollReveal>
           <ScrollReveal delay={150}>
             <div className="mx-auto mt-12 max-w-xl rounded-[12px] border border-brand-border bg-brand-background p-8 text-center sm:p-10">
@@ -157,18 +155,26 @@ export default function Reservation() {
                   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
                 </svg>
               </div>
-              <p className="mt-6 text-base leading-relaxed text-brand-text_muted">
-                To enquire about a table, please call us on{' '}
+              <h3 className="mt-6 font-heading text-2xl font-semibold text-brand-text">
+                We are closed
+              </h3>
+              <p className="mt-4 text-base leading-relaxed text-brand-text_muted">
+                Copper Kitchen permanently closed on 26 October 2025. Online
+                booking is no longer available — this website stands as a
+                tribute to the restaurant and the meals shared at 75 Sheep
+                Street.
+              </p>
+              <p className="mt-6 text-sm text-brand-text_muted">
+                Booking enquiries:{' '}
                 <a
                   href={`tel:${PHONE_TEL}`}
                   className="font-semibold text-brand-primary underline decoration-brand-accent underline-offset-2 hover:text-brand-primary_hover"
                 >
                   {PHONE_DISPLAY}
                 </a>
-                .
               </p>
-              <a href={`tel:${PHONE_TEL}`} className="btn-primary mt-8">
-                Call {PHONE_DISPLAY}
+              <a href="#story" className="btn-secondary mt-8">
+                Discover our legacy
               </a>
             </div>
           </ScrollReveal>

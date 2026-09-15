@@ -3,7 +3,7 @@
  *
  * Inserts ONLY verified content:
  *  - Admin user (from ADMIN_EMAIL / ADMIN_PASSWORD env vars)
- *  - Restaurant settings (transition notice, contact details, capacity)
+ *  - Restaurant settings (closure status, contact details, capacity)
  *  - Opening hours (7 rows, closed)
  *  - Menu categories + items (no prices — prices are not verified)
  *  - Tripadvisor-sourced testimonials (approved)
@@ -20,13 +20,12 @@ const prisma = new PrismaClient();
 
 const SETTINGS: Record<string, Prisma.InputJsonValue> = {
   reservations_enabled: false,
+  permanently_closed: true,
+  closed_date: '2025-10-26',
+  status_message: 'Copper Kitchen is permanently closed and no longer takes bookings.',
   capacity_total: 40,
   max_party_size: 20,
   min_party_size: 1,
-  status_banner_enabled: true,
-  status_banner_text:
-    'Copper Kitchen ceased trading on 26 October 2025 and now operates as Boca Tapas Bar and Grill.',
-  boca_url: 'https://www.bocabicester.com/',
   phone_display: '01869 240877',
   phone_tel: '+441869240877',
   address: '75 Sheep Street, Bicester, Oxfordshire OX26 6JS',
@@ -59,7 +58,7 @@ const MENU: Array<{
         dietaryTags: ['V']
       },
       {
-        name: 'Pan fried Mozzarella wrapped in ham on ciabatta with salad',
+        name: 'Pan fried Mozzarella wrapped in ham on chiabata with salad',
         dietaryTags: ['v']
       }
     ]
@@ -114,37 +113,27 @@ const TESTIMONIALS: Array<{
   {
     reviewerName: '360stacyc',
     reviewDate: '2022-11-19',
-    text: 'Pretty, cosy, delicious...'
+    text: 'Pretty, cosy, delicious... we will absolutely be going back.'
   },
   {
     reviewerName: 'tubs168',
     reviewDate: '2022-10-20',
-    text: 'Warm and cosy with excellent food...'
+    text: 'Warm and cosy with excellent food. A gem in Bicester.'
   },
   {
     reviewerName: 'lesclt',
     reviewDate: '2022-10-08',
-    text: 'Cosy restaurant, consistently good...'
+    text: 'Cosy restaurant, consistently good... first class service.'
   },
   {
     reviewerName: 'jayceek2013',
     reviewDate: '2022-08-08',
-    text: 'Delicious Food Lovely Venue Great Service...'
-  },
-  {
-    reviewerName: 'joannelK9044HL',
-    reviewDate: '2022-08-03',
-    text: 'Lovely restaurant...'
+    text: 'Delicious Food Lovely Venue Great Service'
   },
   {
     reviewerName: 'HenningJ719',
     reviewDate: '2022-07-15',
-    text: 'One of the best in town...'
-  },
-  {
-    reviewerName: 'katym279',
-    reviewDate: '2022-06-04',
-    text: 'Amazing food...'
+    text: 'One of the best in town'
   }
 ];
 

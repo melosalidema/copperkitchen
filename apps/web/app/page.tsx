@@ -1,7 +1,6 @@
 import Header from '@/components/Header';
-import StatusBanner from '@/components/StatusBanner';
 import Hero from '@/components/Hero';
-import About from '@/components/About';
+import Story from '@/components/Story';
 import MenuSection from '@/components/MenuSection';
 import Featured from '@/components/Featured';
 import GallerySection from '@/components/GallerySection';
@@ -23,10 +22,9 @@ export default function Home(): React.ReactElement {
         Skip to content
       </a>
       <Header />
-      <StatusBanner />
       <main id="main">
         <Hero />
-        <About />
+        <Story />
         <MenuSection />
         <Featured />
         <GallerySection />

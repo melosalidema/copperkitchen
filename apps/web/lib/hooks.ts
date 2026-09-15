@@ -39,13 +39,6 @@ export function useGallery() {
   });
 }
 
-export function useOpeningHours() {
-  return useSWR('/opening-hours', api.getOpeningHours, {
-    ...publicOptions,
-    refreshInterval: 60_000
-  });
-}
-
 /** Availability keyed on date + guests so it re-fetches when either changes. */
 export function useAvailability(date: string, guests: number) {
   const enabled = date.length === 10 && guests >= 1 && guests <= 20;

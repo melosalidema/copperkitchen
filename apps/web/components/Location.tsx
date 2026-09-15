@@ -71,6 +71,11 @@ export default function Location() {
         <p className="mt-4 text-center text-xs text-brand-text_muted">
           {ADDRESS_FULL}
         </p>
+
+        <p className="mt-2 text-center text-xs text-brand-text_muted">
+          This site is now home to the restaurant&apos;s successor — the
+          building lives on.
+        </p>
       </div>
     </section>
   );

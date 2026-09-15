@@ -10,7 +10,8 @@ import { prisma } from '../lib/prisma.js';
 import { asyncHandler } from '../lib/asyncHandler.js';
 import {
   areReservationsEnabled,
-  getNumberSetting
+  getNumberSetting,
+  isPermanentlyClosed
 } from '../lib/settings.js';
 import {
   sendReservationConfirmation,
@@ -22,8 +23,10 @@ import {
 
 export const publicRouter: Router = Router();
 
+const RESTAURANT_CLOSED_MESSAGE =
+  'Copper Kitchen is permanently closed and no longer takes bookings.';
 const RESERVATIONS_DISABLED_MESSAGE =
-  'Bookings are currently closed. Copper Kitchen ceased trading on 26 October 2025 and now operates as Boca Tapas Bar and Grill (https://www.bocabicester.com/).';
+  'Bookings are currently closed — Copper Kitchen is no longer taking reservations.';
 
 // ---------------------------------------------------------------------------
 // Settings
@@ -107,6 +110,13 @@ publicRouter.get(
 publicRouter.get(
   '/reservations/availability',
   asyncHandler(async (req, res) => {
+    if (await isPermanentlyClosed()) {
+      res
+        .status(403)
+        .json({ error: { code: 'RESTAURANT_CLOSED', message: RESTAURANT_CLOSED_MESSAGE } });
+      return;
+    }
+
     if (!(await areReservationsEnabled())) {
       res
         .status(403)
@@ -160,6 +170,13 @@ publicRouter.get(
 publicRouter.post(
   '/reservations',
   asyncHandler(async (req, res) => {
+    if (await isPermanentlyClosed()) {
+      res
+        .status(403)
+        .json({ error: { code: 'RESTAURANT_CLOSED', message: RESTAURANT_CLOSED_MESSAGE } });
+      return;
+    }
+
     if (!(await areReservationsEnabled())) {
       res
         .status(403)
